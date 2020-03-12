@@ -2,7 +2,13 @@
   max-width: 850px;
   margin: 0 auto;
 }
-
 nav {
   padding: 20px 0 20px 0;
+}
+.leaflet-container {
+  height: 600px;
+  width: 1000px;
+}
+.sr-only {
+  display: none;
 }
