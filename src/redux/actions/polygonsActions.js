@@ -1,9 +1,9 @@
 import * as types from "./actionTypes";
-import * as polygonesApi from "../../domainServices/polygonesApi";
+import * as polygonsApi from "../../domainServices/polygonsApi";
 import { beginApiCall, apiCallError } from "./apiStatusActions";
 
-export function loadPolygonsSuccess(polygones) {
-  return { type: types.LOAD_POLYGONS_SUCCESS, polygones };
+export function loadPolygonsSuccess(polygons) {
+  return { type: types.LOAD_POLYGONS_SUCCESS, polygons };
 }
 
 export function createPolygonSuccess(polyline) {
@@ -21,10 +21,10 @@ export function deletePolygonOptimistic(polyline) {
 export function loadPolygons() {
   return function(dispatch) {
     dispatch(beginApiCall());
-    return polygonesApi
+    return polygonsApi
       .getPolygons()
-      .then(polygones => {
-        dispatch(loadPolygonsSuccess(polygones));
+      .then(polygons => {
+        dispatch(loadPolygonsSuccess(polygons));
       })
       .catch(error => {
         dispatch(apiCallError(error));
@@ -37,7 +37,7 @@ export function savePolygon(polyline) {
   //eslint-disable-next-line no-unused-vars
   return function(dispatch, getState) {
     dispatch(beginApiCall());
-    return polygonesApi
+    return polygonsApi
       .savePolygon(polyline)
       .then(savedPolygon => {
         polyline.id
@@ -56,6 +56,6 @@ export function deletePolygon(polyline) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deletePolygonOptimistic(polyline));
-    return polygonesApi.deletePolygon(polyline.id);
+    return polygonsApi.deletePolygon(polyline.id);
   };
 }

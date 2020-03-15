@@ -1,21 +1,19 @@
 import * as types from "../actions/actionTypes";
 import initialState from "./initialState";
 
-export default function polylineReducer(
-  state = initialState.polylines,
-  action
-) {
+export default function polygonReducer(state = initialState.polygons, action) {
   switch (action.type) {
-    case types.CREATE_POLYLINE_SUCCESS:
-      return [...state, { ...action.polyline }];
-    case types.UPDATE_POLYLINE_SUCCESS:
-      return state.map(polyline =>
-        polyline.id === action.polyline.id ? action.polyline : polyline
+    case types.CREATE_POLYGON_SUCCESS:
+      return [...state, { ...action.polygon }];
+    case types.UPDATE_POLYGON_SUCCESS:
+      return state.map(polygon =>
+        polygon.id === action.polygon.id ? action.polygon : polygon
       );
-    case types.LOAD_POLYLINES_SUCCESS:
-      return action.polylines;
-    case types.DELETE_POLYLINE_OPTIMISTIC:
-      return state.filter(polyline => polyline.id !== action.polyline.id);
+    case types.LOAD_POLYGONS_SUCCESS:
+      debugger;
+      return action.polygons;
+    case types.DELETE_POLYGON_OPTIMISTIC:
+      return state.filter(polygon => polygon.id !== action.polygon.id);
     default:
       return state;
   }
