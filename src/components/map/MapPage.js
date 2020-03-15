@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as markersActions from "../../redux/actions/markersActions";
 import * as polylinesActions from "../../redux/actions/polylinesActions";
 import * as polygonsActions from "../../redux/actions/polygonsActions";
@@ -8,15 +8,9 @@ import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 import WebMap from "./Map";
 
-class MapPage extends React.Component {
-  componentDidMount() {
-    const { polylines, polygons, markers, actions } = this.props;
-    if (
-      Object.entries(polygons).length +
-        Object.entries(markers).length +
-        Object.entries(polylines).length ==
-      0
-    ) {
+export function MapPage({ polylines, polygons, markers, actions, loading }) {
+  useEffect(() => {
+    if (polygons.length + markers.length + polylines.length == 0) {
       actions.loadMarkers().catch(error => {
         alert("Loading markers failed" + error);
       });
@@ -29,29 +23,19 @@ class MapPage extends React.Component {
         alert("Loading polygons failed" + error);
       });
     }
-  }
+  });
 
-  render() {
-    return (
-      <div>
-        {this.props.loading ||
-        Object.entries(this.props.markers).length +
-          Object.entries(this.props.polygons).length +
-          Object.entries(this.props.polylines).length ==
-          0 ? (
-          <Spinner />
-        ) : (
-          <>
-            <WebMap
-              markers={this.props.markers}
-              polylines={this.props.polylines}
-              polygons={this.props.polygons}
-            />
-          </>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {loading || markers.length + polygons.length + polylines.length == 0 ? (
+        <Spinner />
+      ) : (
+        <>
+          <WebMap markers={markers} polylines={polylines} polygons={polygons} />
+        </>
+      )}
+    </div>
+  );
 }
 
 MapPage.propTypes = {

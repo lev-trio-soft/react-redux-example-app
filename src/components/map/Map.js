@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import L from "leaflet";
-import { Draw } from "leaflet-draw";
 import markerAsset from "../../assets/marker.png";
 
 const style = {
@@ -8,15 +7,12 @@ const style = {
   height: "500px"
 };
 
-class WebMap extends React.Component {
-  componentDidMount() {
-    //get data from props
-    let markers = this.props.markers;
-    let polygons = this.props.polygons;
-    let polylines = this.props.polylines;
+export function WebMap({ markers, polygons, polylines }) {
+  const [map, setMap] = useState({});
 
+  useEffect(() => {
     // create map
-    this.map = L.map("map", {
+    let newMap = L.map("map", {
       center: [31.813657, 34.65553], // map starting position
       zoom: 16,
       layers: [
@@ -30,47 +26,29 @@ class WebMap extends React.Component {
         )
       ]
     });
-    // FeatureGroup is to store editable layers
-    // var drawnItems = new L.FeatureGroup();
-    // this.map.addLayer(drawnItems);
-    // var drawControl = new L.Control.Draw({
-    //   edit: {
-    //     featureGroup: drawnItems
-    //   }
-    // });
-    // this.map.addControl(drawControl);
 
-    //by recieved data
-    this.addPolygons(polygons);
-    this.addPolylines(polylines);
-    this.addMarkers(markers);
-  }
-
-  addPolygons(polygons) {
     polygons.forEach(element => {
       L.polygon(
         element.coordinates,
         !element.color ? "red" : element.color
-      ).addTo(this.map);
+      ).addTo(newMap);
     });
-  }
 
-  addMarkers(markers) {
     markers.forEach(marker => {
       L.marker(marker.coordinates, {
         icon: L.icon({
           iconUrl: markerAsset,
           iconSize: [30, 30]
         })
-      }).addTo(this.map);
+      }).addTo(newMap);
     });
-  }
 
-  addPolylines(polylines) {
     polylines.forEach(element => {
-      L.polyline(element.coordinates).addTo(this.map);
+      L.polyline(element.coordinates).addTo(newMap);
     });
-  }
+
+    setMap(newMap);
+  }, []);
 
   // componentDidUpdate({ markerPosition }) {
   //   // check if position has changed
@@ -79,8 +57,6 @@ class WebMap extends React.Component {
   //   }
   // }
 
-  render() {
-    return <div id="map" style={style} />;
-  }
+  return <div id="map" style={style} />;
 }
 export default WebMap;
