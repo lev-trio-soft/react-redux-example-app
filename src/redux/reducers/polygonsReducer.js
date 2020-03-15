@@ -10,7 +10,6 @@ export default function polygonReducer(state = initialState.polygons, action) {
         polygon.id === action.polygon.id ? action.polygon : polygon
       );
     case types.LOAD_POLYGONS_SUCCESS:
-      debugger;
       return action.polygons;
     case types.DELETE_POLYGON_OPTIMISTIC:
       return state.filter(polygon => polygon.id !== action.polygon.id);

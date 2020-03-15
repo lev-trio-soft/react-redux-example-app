@@ -8,10 +8,8 @@ import configureStore from "./redux/configureStore";
 import { Provider as ReduxProvider } from "react-redux";
 import "leaflet/dist/leaflet.css";
 
-const store = configureStore();
-
 render(
-  <ReduxProvider store={store}>
+  <ReduxProvider store={configureStore}>
     <Router>
       <App />
     </Router>
