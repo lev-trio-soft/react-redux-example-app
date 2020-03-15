@@ -1,6 +1,6 @@
-import * as types from "./actionTypes";
-import * as markersApi from "../../domainServices/markersApi";
-import { beginApiCall, apiCallError } from "./apiStatusActions";
+import * as types from "./actionTypes.tsx";
+import * as markersApi from "../../domainServices/markersApi.tsx";
+import { beginApiCall, apiCallError } from "./apiStatusActions.tsx";
 
 export function loadMarkersSuccess(markers) {
   return { type: types.LOAD_MARKERS_SUCCESS, markers };
@@ -19,7 +19,7 @@ export function deleteMarkerOptimistic(marker) {
 }
 
 export function loadMarkers() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginApiCall());
     return markersApi
       .getMarkers()
@@ -35,7 +35,7 @@ export function loadMarkers() {
 
 export function saveMarker(marker) {
   //eslint-disable-next-line no-unused-vars
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch(beginApiCall());
     return markersApi
       .saveMarker(marker)
@@ -52,7 +52,7 @@ export function saveMarker(marker) {
 }
 
 export function deleteMarker(marker) {
-  return function(dispatch) {
+  return function (dispatch) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteMarkerOptimistic(marker));

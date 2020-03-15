@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as courseActions from "../../redux/actions/courseActions";
-import * as authorActions from "../../redux/actions/authorActions";
+import * as courseActions from "../../redux/actions/courseActions.tsx";
+import * as authorActions from "../../redux/actions/authorActions.tsx";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import CourseList from "./CourseList";
@@ -47,21 +47,21 @@ class CoursesPage extends React.Component {
         {this.props.loading ? (
           <Spinner />
         ) : (
-          <>
-            <button
-              style={{ marginBottom: 20 }}
-              className="btn btn-primary add-course"
-              onClick={() => this.setState({ redirectToAddCoursePage: true })}
-            >
-              Add Course
+            <>
+              <button
+                style={{ marginBottom: 20 }}
+                className="btn btn-primary add-course"
+                onClick={() => this.setState({ redirectToAddCoursePage: true })}
+              >
+                Add Course
             </button>
 
-            <CourseList
-              onDeleteClick={this.handleDeleteCourse}
-              courses={this.props.courses}
-            />
-          </>
-        )}
+              <CourseList
+                onDeleteClick={this.handleDeleteCourse}
+                courses={this.props.courses}
+              />
+            </>
+          )}
       </>
     );
   }
@@ -80,11 +80,11 @@ function mapStateToProps(state) {
       state.authors.length === 0
         ? []
         : state.courses.map(course => {
-            return {
-              ...course,
-              authorName: state.authors.find(a => a.id === course.authorId).name
-            };
-          }),
+          return {
+            ...course,
+            authorName: state.authors.find(a => a.id === course.authorId).name
+          };
+        }),
     authors: state.authors,
     loading: state.apiCallsInProgress > 0
   };

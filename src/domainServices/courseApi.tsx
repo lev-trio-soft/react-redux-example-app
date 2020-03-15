@@ -1,5 +1,5 @@
-import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.API_URL + "/courses/";
+import { handleResponse, handleError } from "./apiUtils.tsx";
+const baseUrl = process.env["API_URL"] + "/courses/";
 
 export function getCourses() {
   return fetch(baseUrl)

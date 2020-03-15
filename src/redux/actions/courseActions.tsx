@@ -1,6 +1,6 @@
-import * as types from "./actionTypes";
-import * as courseApi from "../../domainServices/courseApi";
-import { beginApiCall, apiCallError } from "./apiStatusActions";
+import * as types from "./actionTypes.tsx";
+import * as courseApi from "../../domainServices/courseApi.tsx";
+import { beginApiCall, apiCallError } from "./apiStatusActions.tsx";
 
 export function loadCourseSuccess(courses) {
   return { type: types.LOAD_COURSES_SUCCESS, courses };
@@ -19,7 +19,7 @@ export function deleteCourseOptimistic(course) {
 }
 
 export function loadCourses() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginApiCall());
     return courseApi
       .getCourses()
@@ -35,7 +35,7 @@ export function loadCourses() {
 
 export function saveCourse(course) {
   //eslint-disable-next-line no-unused-vars
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch(beginApiCall());
     return courseApi
       .saveCourse(course)
@@ -52,7 +52,7 @@ export function saveCourse(course) {
 }
 
 export function deleteCourse(course) {
-  return function(dispatch) {
+  return function (dispatch) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteCourseOptimistic(course));

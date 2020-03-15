@@ -1,5 +1,5 @@
-import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.API_URL + "/polygons/";
+import { handleResponse, handleError } from "./apiUtils.tsx";
+const baseUrl = process.env["API_URL"] + "/polygons/";
 
 export function getPolygons() {
   return fetch(baseUrl)

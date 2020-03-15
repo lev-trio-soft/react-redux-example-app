@@ -1,5 +1,5 @@
-import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.API_URL + "/markers/";
+import { handleResponse, handleError } from "./apiUtils.tsx";
+const baseUrl = process.env["API_URL"] + "/markers/";
 
 export function getMarkers() {
   return fetch(baseUrl)

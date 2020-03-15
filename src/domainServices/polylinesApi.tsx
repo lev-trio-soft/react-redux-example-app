@@ -1,5 +1,5 @@
-import { handleResponse, handleError } from "./apiUtils";
-const baseUrl = process.env.API_URL + "/polylines/";
+import { handleResponse, handleError } from "./apiUtils.tsx";
+const baseUrl = process.env["API_URL"] + "/polylines/";
 
 export function getPolylines() {
   return fetch(baseUrl)

@@ -1,13 +1,13 @@
-import * as types from "./actionTypes";
-import * as authorApi from "../../domainServices/authorApi";
-import { beginApiCall, apiCallError } from "./apiStatusActions";
+import * as types from "./actionTypes.tsx";
+import * as authorApi from "../../domainServices/authorApi.tsx";
+import { beginApiCall, apiCallError } from "./apiStatusActions.tsx";
 
 export function loadAuthorsSuccess(authors) {
   return { type: types.LOAD_AUTHORS_SUCCESS, authors };
 }
 
 export function loadAuthors() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginApiCall());
     return authorApi
       .getAuthors()

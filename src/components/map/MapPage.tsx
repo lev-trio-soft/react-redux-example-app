@@ -1,8 +1,8 @@
 import Map from "./Map.tsx";
 import React, { useEffect } from "react";
-import { loadMarkers } from "../../redux/actions/markersActions";
-import { loadPolylines } from "../../redux/actions/polylinesActions";
-import { loadPolygons } from "../../redux/actions/polygonsActions";
+import { loadMarkers } from "../../redux/actions/markersActions.tsx";
+import { loadPolylines } from "../../redux/actions/polylinesActions.tsx";
+import { loadPolygons } from "../../redux/actions/polygonsActions.tsx";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 
@@ -47,10 +47,10 @@ function MapPage({
       {loading || markers.length + polygons.length + polylines.length == 0 ? (
         <Spinner />
       ) : (
-        <>
-          <Map markers={markers} polylines={polylines} polygons={polygons} />
-        </>
-      )}
+          <>
+            <Map markers={markers} polylines={polylines} polygons={polygons} />
+          </>
+        )}
     </div>
   );
 }

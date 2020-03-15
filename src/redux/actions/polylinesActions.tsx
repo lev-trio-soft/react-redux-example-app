@@ -1,6 +1,6 @@
-import * as types from "./actionTypes";
-import * as polylinesApi from "../../domainServices/polylinesApi";
-import { beginApiCall, apiCallError } from "./apiStatusActions";
+import * as types from "./actionTypes.tsx";
+import * as polylinesApi from "../../domainServices/polylinesApi.tsx";
+import { beginApiCall, apiCallError } from "./apiStatusActions.tsx";
 
 export function loadPolylinesSuccess(polylines) {
   return { type: types.LOAD_POLYLINES_SUCCESS, polylines };
@@ -19,7 +19,7 @@ export function deletePolylineOptimistic(polyline) {
 }
 
 export function loadPolylines() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(beginApiCall());
     return polylinesApi
       .getPolylines()
@@ -35,7 +35,7 @@ export function loadPolylines() {
 
 export function savePolyline(polyline) {
   //eslint-disable-next-line no-unused-vars
-  return function(dispatch, getState) {
+  return function (dispatch, getState) {
     dispatch(beginApiCall());
     return polylinesApi
       .savePolyline(polyline)
@@ -52,7 +52,7 @@ export function savePolyline(polyline) {
 }
 
 export function deletePolyline(polyline) {
-  return function(dispatch) {
+  return function (dispatch) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deletePolylineOptimistic(polyline));
