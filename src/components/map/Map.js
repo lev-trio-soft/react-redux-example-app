@@ -11,8 +11,10 @@ const style = {
 class WebMap extends React.Component {
   componentDidMount() {
     //get data from props
-    let shapes = this.props.shapes;
-    console.log(shapes);
+    let markers = this.props.markers;
+    let polygons = this.props.polygons;
+    let polylines = this.props.polylines;
+
     // create map
     this.map = L.map("map", {
       center: [31.813657, 34.65553], // map starting position
@@ -39,9 +41,9 @@ class WebMap extends React.Component {
     // this.map.addControl(drawControl);
 
     //by recieved data
-    this.addPolygons(shapes.polygons);
-    this.addPolylines(shapes.polylines);
-    this.addMarkers(shapes.markers);
+    this.addPolygons(polygons);
+    this.addPolylines(polylines);
+    this.addMarkers(markers);
   }
 
   addPolygons(polygons) {

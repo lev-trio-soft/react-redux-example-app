@@ -1,6 +1,8 @@
 export default {
   courses: [],
   authors: [],
-  shapes: {},
+  markers: [],
+  polylines: [],
+  polygons: [],
   apiCallsInProgress: 0
 };

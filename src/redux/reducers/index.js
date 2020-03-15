@@ -1,13 +1,17 @@
 import { combineReducers } from "redux";
 import courses from "./courseReducer";
 import authors from "./authorReducer";
-import shapes from "./shapesReducer";
+import markers from "./markersReducer";
+import polygons from "./polygonsReducer";
+import polylines from "./polylinesReducer";
 import apiCallsInProgress from "./apiStatusReducer";
 
 const rootReducer = combineReducers({
   courses,
   authors,
-  shapes,
+  markers,
+  polylines,
+  polygons,
   apiCallsInProgress
 });
 
