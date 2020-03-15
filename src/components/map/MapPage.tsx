@@ -1,23 +1,23 @@
+import Map from "./Map.tsx";
 import React, { useEffect } from "react";
 import { loadMarkers } from "../../redux/actions/markersActions";
 import { loadPolylines } from "../../redux/actions/polylinesActions";
 import { loadPolygons } from "../../redux/actions/polygonsActions";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
-import WebMap from "./Map";
 
 interface Props {
-  loadPolylines;
-  loadPolygons;
-  loadMarkers;
-  markers: [];
-  polygons: [];
-  polylines: [];
-  actions: object;
-  loading: boolean;
+  loadPolylines: Function;
+  loadPolygons: Function;
+  loadMarkers: Function;
+  markers: Array<any>;
+  polygons: Array<any>;
+  polylines: Array<any>;
+  actions: Object;
+  loading: Boolean;
 }
 
-export function MapPage({
+function MapPage({
   polylines,
   loadPolylines,
   polygons,
@@ -48,7 +48,7 @@ export function MapPage({
         <Spinner />
       ) : (
         <>
-          <WebMap markers={markers} polylines={polylines} polygons={polygons} />
+          <Map markers={markers} polylines={polylines} polygons={polygons} />
         </>
       )}
     </div>

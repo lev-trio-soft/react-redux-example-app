@@ -7,7 +7,13 @@ const style = {
   height: "500px"
 };
 
-export function WebMap({ markers, polygons, polylines }) {
+interface Props {
+  markers: Array<any>;
+  polygons: Array<any>;
+  polylines: Array<any>;
+}
+
+export function Map({ markers, polygons, polylines }: Props) {
   const [map, setMap] = useState({});
 
   useEffect(() => {
@@ -59,4 +65,4 @@ export function WebMap({ markers, polygons, polylines }) {
 
   return <div id="map" style={style} />;
 }
-export default WebMap;
+export default Map;
