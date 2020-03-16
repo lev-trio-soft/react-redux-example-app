@@ -4,7 +4,7 @@ import { loadMarkers } from "../../redux/actions/markersActions.tsx";
 import { loadPolylines } from "../../redux/actions/polylinesActions.tsx";
 import { loadPolygons } from "../../redux/actions/polygonsActions.tsx";
 import { connect } from "react-redux";
-import Spinner from "../common/Spinner";
+import Spinner from "../common/Spinner.tsx";
 
 interface Props {
   loadPolylines: Function;

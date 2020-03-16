@@ -1,5 +1,14 @@
 import React from "react";
-import PropTypes from "prop-types";
+
+interface Props {
+  name: string,
+  label: string,
+  onChange: any,
+  defaultOption: string,
+  value: any
+  error: string,
+  options: any
+}
 
 const SelectInput = ({
   name,
@@ -9,7 +18,7 @@ const SelectInput = ({
   value,
   error,
   options
-}) => {
+}: Props) => {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
@@ -34,16 +43,6 @@ const SelectInput = ({
       </div>
     </div>
   );
-};
-
-SelectInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  defaultOption: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  error: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default SelectInput;
