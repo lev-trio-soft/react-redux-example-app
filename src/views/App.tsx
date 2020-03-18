@@ -1,15 +1,14 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, BrowserRouter } from "react-router-dom";
 import PageNotFound from "./components/PageNotFound.tsx";
 import MapPage from "./components/map/MapPage.tsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import rootStore from "../redux/rootStore.tsx";
-import { Provider as ReduxProvider } from "react-redux";
-import { BrowserRouter as Router } from "react-router-dom";
 import { IAppState } from '../models/IAppState';
-import { Store } from 'react-redux';
 import { initialState } from "../redux/initialState.tsx"
+import { Store } from "redux";
+import { Provider } from "react-redux";
 
 function App() {
 
@@ -17,8 +16,8 @@ function App() {
   const store: Store<IAppState> = rootStore(init);
 
   return (
-    <ReduxProvider store={store}>
-      <Router>
+    <Provider store={store}>
+      <BrowserRouter>
         <div className="container-fluid">
           {/* <Header /> */}
           <Switch>
@@ -32,8 +31,8 @@ function App() {
           </Switch>
           <ToastContainer autoClose={3000} hideProgressBar />
         </div>
-      </Router>
-    </ReduxProvider>
+      </BrowserRouter>
+    </Provider>
   )
 }
 export default App;

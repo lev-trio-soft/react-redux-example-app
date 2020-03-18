@@ -1,4 +1,5 @@
 export interface IMarker {
     id: number;
-    coordinates: Array<number>;
+    coordinates: [number, number];
+    status: number
 }

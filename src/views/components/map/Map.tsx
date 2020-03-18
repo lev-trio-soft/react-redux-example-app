@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import L from "leaflet";
-import markerAsset from "../../../assets/marker.png";
-import { IMarkersState } from "redux/markers/models/IMarkersState";
-import { IPolygonsState } from "redux/polygons/models/IPolygonsState";
-import { IPolylinesState } from "redux/polylines/models/IPolylinesState";
+import Draw from 'leaflet-draw'
+import markerError from "../../../assets/markerError.png";
+import markerOk from "../../../assets/markerOk.png";
+import markerWarning from "../../../assets/markerWarning.png";
+import { IMarker } from "redux/markers/models/IMarker";
+import { IPolygon } from "redux/polygons/models/IPolygon";
+import { IPolyline } from "redux/polylines/models/IPolyline";
 
 const style = {
   width: "100%",
@@ -11,19 +14,24 @@ const style = {
 };
 
 interface IProps {
-  markers: IMarkersState;
-  polygons: IPolygonsState;
-  polylines: IPolylinesState;
+  markers: IMarker[];
+  polygons: IPolygon[];
+  polylines: IPolyline[];
 }
 
 export function Map({ markers, polygons, polylines }: IProps) {
-  const [map, setMap] = useState({});
+
+
+  let map: L.Map;
+  let OkMarkers = new L.FeatureGroup();
 
   useEffect(() => {
     // create map
-    let newMap = L.map("map", {
+    map = L.map("map", {
       center: [31.813657, 34.65553], // map starting position
-      zoom: 16,
+      zoom: 10,
+      maxZoom: 17,
+      minZoom: 8,
       layers: [
         L.tileLayer(
           //mapbox opeLayer configured url
@@ -36,36 +44,86 @@ export function Map({ markers, polygons, polylines }: IProps) {
       ]
     });
 
-    polygons.items.forEach(element => {
-      L.polygon(
-        element.coordinates,
-        !element.color ? "red" : element.color
-      ).addTo(newMap);
+    //filter by zoom level
+    map.on('zoomend', function () {
+      if (map.getZoom() < 12) {
+        map.removeLayer(OkMarkers);
+      }
+      else {
+        map.addLayer(OkMarkers);
+      }
     });
 
-    markers.items.forEach(marker => {
-      L.marker(marker.coordinates, {
-        icon: L.icon({
-          iconUrl: markerAsset,
-          iconSize: [30, 30]
+    let ZoomViewer = L.Control.extend({
+      onAdd: function () {
+        var container = L.DomUtil.create('div');
+        var gauge = L.DomUtil.create('div');
+        container.style.width = '100px';
+        container.style.background = 'rgba(255,255,255,0.5)';
+        container.style.textAlign = 'left';
+        map.on('zoomstart zoom zoomend', function (ev) {
+          gauge.innerHTML = 'Zoom level: ' + map.getZoom();
         })
-      }).addTo(newMap);
-    });
+        container.appendChild(gauge);
 
-    polylines.items.forEach(element => {
-      L.polyline(element.coordinates).addTo(newMap);
+        return container;
+      }
     });
+    (new ZoomViewer).addTo(map);
 
-    setMap(newMap);
   }, []);
 
-  // componentDidUpdate({ markerPosition }) {
-  //   // check if position has changed
-  //   if (this.props.markerPosition !== markerPosition) {
-  //     this.marker.setLatLng(this.props.markerPosition);
-  //   }
-  // }
 
-  return <div id="map" style={style} />;
+  //addMarkers
+  useEffect(() => {
+    markers.forEach(marker => {
+      switch (marker.status) {
+        case 0:
+          let ok = L.marker(marker.coordinates, {
+            icon: L.icon({
+              iconUrl: markerOk,
+              iconSize: [30, 30]
+            })
+          }).addTo(map);
+          OkMarkers.addLayer(ok)
+          break;
+        case 1:
+          L.marker(marker.coordinates, {
+            icon: L.icon({
+              iconUrl: markerWarning,
+              iconSize: [30, 30]
+            })
+          }).addTo(map);
+          break;
+        case 2:
+          L.marker(marker.coordinates, {
+            icon: L.icon({
+              iconUrl: markerError,
+              iconSize: [30, 30]
+            })
+          }).addTo(map);
+
+          break;
+      }
+    });
+  }, [markers])
+
+  //addShapes
+  useEffect(() => {
+    polygons.forEach(element => {
+      L.polygon(
+        element.coordinates,
+      ).addTo(map);
+    });
+
+    polylines.forEach(element => {
+      L.polyline(element.coordinates).addTo(map);
+    });
+  }, [polygons, polylines])
+
+  return (
+    <>
+      <div id="map" style={style} />
+    </>);
 }
 export default Map;

@@ -1,5 +1,5 @@
 export interface IPolyline {
     id: number;
-    coordinates: Array<Array<number>>;
+    coordinates: [] | [][];
     color: string;
 }

@@ -1,5 +1,4 @@
-import { Action } from "react-redux";
-
+import { Action } from "redux";
 export default interface IAction<T> extends Action<string> {
     readonly type: string;
     readonly payload?: T;

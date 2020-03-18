@@ -50,9 +50,9 @@
 // };
 
 const markers = [
-  { id: 1, coordinates: [31.812865, 34.653818] },
-  { id: 2, coordinates: [31.813, 34.654] },
-  { id: 3, coordinates: [31.8121, 34.6531] }
+  { id: 1, coordinates: [31.812865, 34.67], status: 0 },
+  { id: 2, coordinates: [31.813, 34.654], status: 1 },
+  { id: 3, coordinates: [31.8121, 34.6531], status: 2 }
 ];
 
 const polylines = [

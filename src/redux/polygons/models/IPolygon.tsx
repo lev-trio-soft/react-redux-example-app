@@ -1,5 +1,5 @@
 export interface IPolygon {
     id: number;
-    coordinates: Array<any>;
+    coordinates: [] | [][] | [][][];
     color: string;
 }

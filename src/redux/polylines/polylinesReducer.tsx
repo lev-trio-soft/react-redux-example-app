@@ -1,10 +1,12 @@
 import * as types from "../actionTypes.tsx";
 import { initialState } from "../initialState.tsx";
+import IAction from "models/IAction";
+import { IPolylinesState } from "./models/IPolylinesState";
 
 export default function polylineReducer(
   state = initialState.polylines,
-  action
-) {
+  action: IAction<any>
+): IPolylinesState {
   switch (action.type) {
     // case types.CREATE_POLYLINE_SUCCESS:
     //   return [...state, { ...action.polyline }];

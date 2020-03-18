@@ -1,7 +1,9 @@
 import * as types from "./markersActionTypes.tsx";
 import { initialState } from "../initialState.tsx";
+import IAction from "models/IAction";
+import { IMarkersState } from "./models/IMarkersState";
 
-export default function markersReducer(state = initialState.markers, action) {
+export default function markersReducer(state = initialState.markers, action: IAction<any>): IMarkersState {
   switch (action.type) {
     // case types.CREATE_MARKER_SUCCESS:
     //   return [...state, { ...action.marker }];
