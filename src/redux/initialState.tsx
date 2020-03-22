@@ -1,4 +1,4 @@
-import { IAppState } from 'models/IAppState';
+import { IAppState } from '../models/IAppState';
 
 export const initialState: IAppState = {
     markers: { items: [] },

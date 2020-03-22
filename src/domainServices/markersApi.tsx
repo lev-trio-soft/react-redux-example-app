@@ -1,5 +1,7 @@
-import { handleResponse, handleError } from "./apiUtils.tsx";
-const baseUrl = process.env["API_URL"] + "/markers/";
+import { handleResponse, handleError } from "./apiUtils";
+import { URL } from "./env"
+
+const baseUrl = URL + "/markers/";
 
 export function getMarkers() {
   return fetch(baseUrl)
@@ -7,7 +9,7 @@ export function getMarkers() {
     .catch(handleError);
 }
 
-export function saveMarker(marker) {
+export function saveMarker(marker: { id: any; }) {
   return fetch(baseUrl + (marker.id || ""), {
     method: marker.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
@@ -17,7 +19,7 @@ export function saveMarker(marker) {
     .catch(handleError);
 }
 
-export function deleteMarker(markerId) {
+export function deleteMarker(markerId: string) {
   return fetch(baseUrl + markerId, { method: "DELETE" })
     .then(handleResponse)
     .catch(handleError);

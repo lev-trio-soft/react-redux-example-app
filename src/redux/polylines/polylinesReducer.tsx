@@ -1,6 +1,6 @@
-import * as types from "../actionTypes.tsx";
-import { initialState } from "../initialState.tsx";
-import IAction from "models/IAction";
+import * as types from "../actionTypes";
+import { initialState } from "../initialState";
+import IAction from "../../models/IAction";
 import { IPolylinesState } from "./models/IPolylinesState";
 
 export default function polylineReducer(

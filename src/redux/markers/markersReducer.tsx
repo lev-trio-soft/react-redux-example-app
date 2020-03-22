@@ -1,6 +1,6 @@
-import * as types from "./markersActionTypes.tsx";
-import { initialState } from "../initialState.tsx";
-import IAction from "models/IAction";
+import * as types from "./markersActionTypes";
+import { initialState } from "../initialState";
+import IAction from "../../models/IAction";
 import { IMarkersState } from "./models/IMarkersState";
 
 export default function markersReducer(state = initialState.markers, action: IAction<any>): IMarkersState {

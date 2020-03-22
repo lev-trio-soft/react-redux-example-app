@@ -1,14 +1,14 @@
-import * as types from "../actionTypes.tsx";
-import * as polylinesApi from "../../domainServices/polylinesApi.tsx";
-import { beginApiCall, apiCallError } from "../apiStatusActions.tsx";
-import * as ActionUtility from '../../utilities/ActionUtility.tsx';
+import * as types from "../actionTypes";
+import * as polylinesApi from "../../domainServices/polylinesApi";
+import { beginApiCall, apiCallError } from "../apiStatusActions";
+import * as ActionUtility from '../../utilities/ActionUtility';
 
-export function loadPolylinesSuccess(polylines) {
+export function loadPolylinesSuccess(polylines: any) {
   return ActionUtility.createAction(types.LOAD_POLYLINES_SUCCESS, polylines);
 }
 
 export function loadPolylines() {
-  return function (dispatch) {
+  return function (dispatch: (arg0: import("../../../../../../../Users/Lev/projects/New-Kando-Map/src/models/IAction").default<any>) => void) {
     dispatch(beginApiCall());
     return polylinesApi
       .getPolylines()
@@ -16,7 +16,7 @@ export function loadPolylines() {
         dispatch(loadPolylinesSuccess(polylines));
       })
       .catch(error => {
-        dispatch(apiCallError(error));
+        dispatch(apiCallError());
         throw error;
       });
   };

@@ -1,5 +1,7 @@
-import { handleResponse, handleError } from "./apiUtils.tsx";
-const baseUrl = process.env["API_URL"] + "/polygons/";
+import { handleResponse, handleError } from "./apiUtils";
+import { URL } from "./env"
+
+const baseUrl = URL + "/polygons/";
 
 export function getPolygons() {
   return fetch(baseUrl)
@@ -7,7 +9,7 @@ export function getPolygons() {
     .catch(handleError);
 }
 
-export function savePolygon(polygon) {
+export function savePolygon(polygon: { id: any; }) {
   return fetch(baseUrl + (polygon.id || ""), {
     method: polygon.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
@@ -17,7 +19,7 @@ export function savePolygon(polygon) {
     .catch(handleError);
 }
 
-export function deletePolygon(polygonId) {
+export function deletePolygon(polygonId: string) {
   return fetch(baseUrl + polygonId, { method: "DELETE" })
     .then(handleResponse)
     .catch(handleError);

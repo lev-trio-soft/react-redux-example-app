@@ -1,5 +1,5 @@
-import { handleResponse, handleError } from "./apiUtils.tsx";
-const baseUrl = process.env["API_URL"] + "/polylines/";
+import { handleResponse, handleError } from "./apiUtils";
+const baseUrl = "http://localhost:3001" + "/polylines/";
 
 export function getPolylines() {
   return fetch(baseUrl)
@@ -7,7 +7,7 @@ export function getPolylines() {
     .catch(handleError);
 }
 
-export function savePolyline(polyline) {
+export function savePolyline(polyline: { id: any; }) {
   return fetch(baseUrl + (polyline.id || ""), {
     method: polyline.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
     headers: { "content-type": "application/json" },
@@ -17,7 +17,7 @@ export function savePolyline(polyline) {
     .catch(handleError);
 }
 
-export function deletePolyline(polylineId) {
+export function deletePolyline(polylineId: string) {
   return fetch(baseUrl + polylineId, { method: "DELETE" })
     .then(handleResponse)
     .catch(handleError);

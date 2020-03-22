@@ -1,14 +1,14 @@
-import * as types from "../actionTypes.tsx";
-import * as polygonsApi from "../../domainServices/polygonsApi.tsx";
-import { beginApiCall, apiCallError } from "../apiStatusActions.tsx";
-import * as ActionUtility from '../../utilities/ActionUtility.tsx';
+import * as types from "../actionTypes";
+import * as polygonsApi from "../../domainServices/polygonsApi";
+import { beginApiCall, apiCallError } from "../apiStatusActions";
+import * as ActionUtility from '../../utilities/ActionUtility';
 
-export function loadPolygonsSuccess(polygons) {
+export function loadPolygonsSuccess(polygons: any) {
   return ActionUtility.createAction(types.LOAD_POLYGONS_SUCCESS, polygons);
 }
 
 export function loadPolygons() {
-  return function (dispatch) {
+  return function (dispatch: (arg0: import("../../../../../../../Users/Lev/projects/New-Kando-Map/src/models/IAction").default<any>) => void) {
     dispatch(beginApiCall());
     return polygonsApi
       .getPolygons()
@@ -16,7 +16,7 @@ export function loadPolygons() {
         dispatch(loadPolygonsSuccess(polygons));
       })
       .catch(error => {
-        dispatch(apiCallError(error));
+        dispatch(apiCallError());
         throw error;
       });
   };

@@ -1,12 +1,25 @@
 import React, { useEffect, useRef } from "react";
+
 import L from "leaflet";
-import Draw from 'leaflet-draw'
+import 'leaflet-draw';
+//import 'leaflet-editable';  @types //overwrites standart leaflet functions of editing, polyline to path etc..
+//import 'leaflet-editable-polyline';
+
+import "leaflet/dist/leaflet.css";
+import 'leaflet-draw/dist/leaflet.draw.css';
+
+//import 'leaflet.markercluster/dist/MarkerCluster.css';
+//import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+//import 'leaflet.markercluster/dist/leaflet.markercluster';
+
+
 import markerError from "../../../assets/markerError.png";
 import markerOk from "../../../assets/markerOk.png";
 import markerWarning from "../../../assets/markerWarning.png";
-import { IMarker } from "redux/markers/models/IMarker";
-import { IPolygon } from "redux/polygons/models/IPolygon";
-import { IPolyline } from "redux/polylines/models/IPolyline";
+
+import { IMarker } from "../../../redux/markers/models/IMarker";
+import { IPolygon } from "../../../redux/polygons/models/IPolygon";
+import { IPolyline } from "../../../redux/polylines/models/IPolyline";
 
 const style = {
   width: "100%",
@@ -21,9 +34,24 @@ interface IProps {
 
 export function Map({ markers, polygons, polylines }: IProps) {
 
-
   let map: L.Map;
   let OkMarkers = new L.FeatureGroup();
+  let editableLayer = new L.FeatureGroup();
+
+  let drawOptions: L.Control.DrawConstructorOptions = {
+    draw: {
+      polyline: false,
+      polygon: false,
+      circle: false,
+      marker: false,
+      rectangle: false,
+      circlemarker: false
+    },
+    edit: {
+      featureGroup: editableLayer, //REQUIRED!!
+      remove: false
+    }
+  };
 
   useEffect(() => {
     // create map
@@ -43,6 +71,12 @@ export function Map({ markers, polygons, polylines }: IProps) {
         )
       ]
     });
+
+
+    map.addLayer(editableLayer);
+
+    let drawControl = new L.Control.Draw(drawOptions);
+    map.addControl(drawControl);
 
     //filter by zoom level
     map.on('zoomend', function () {
@@ -76,7 +110,7 @@ export function Map({ markers, polygons, polylines }: IProps) {
 
   //addMarkers
   useEffect(() => {
-    markers.forEach(marker => {
+    markers.map(marker => {
       switch (marker.status) {
         case 0:
           let ok = L.marker(marker.coordinates, {
@@ -96,30 +130,46 @@ export function Map({ markers, polygons, polylines }: IProps) {
           }).addTo(map);
           break;
         case 2:
-          L.marker(marker.coordinates, {
-            icon: L.icon({
-              iconUrl: markerError,
-              iconSize: [30, 30]
-            })
-          }).addTo(map);
-
+          L.marker(marker.coordinates
+            , {
+              icon: L.icon({
+                iconUrl: markerError,
+                iconSize: [30, 30]
+              }
+              )
+            }
+          ).addTo(map);
           break;
       }
     });
   }, [markers])
 
-  //addShapes
   useEffect(() => {
     polygons.forEach(element => {
       L.polygon(
         element.coordinates,
       ).addTo(map);
     });
+  }, [polygons]);
 
+  useEffect(() => {
     polylines.forEach(element => {
-      L.polyline(element.coordinates).addTo(map);
+      //  = L.Polyline.PolylineEditor(element.coordinates).addTo(map);
+      let pl: L.Polyline = L.polyline(element.coordinates).addTo(map);
+
+      // let coords: L.LatLng[] | L.LatLng[][] | L.LatLng[][][] = pl.getLatLngs();
+      // let disabled = [coords[0], coords[coords.length - 1]];
+
+      // disabled.forEach(latlng => {
+      //   // let vertex = L.marker(latlng);
+      //   // vertex.dragging.disable();
+      //   // vertex.setIcon(goalpost);
+      // });
+
+      editableLayer.addLayer(pl);
     });
-  }, [polygons, polylines])
+  }, []);
+
 
   return (
     <>

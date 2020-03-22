@@ -1,13 +1,13 @@
-import * as types from "../redux/actionTypes.tsx";
-import { initialState } from "./initialState.tsx";
+import * as types from "../redux/actionTypes";
+import { initialState } from "./initialState";
 
-function actionTypeEndsInSuccess(type) {
+function actionTypeEndsInSuccess(type: string) {
   return type.substring(type.length - 8) === "_SUCCESS";
 }
 
 export default function apiCallStatusReducer(
   state = initialState.apiCallsInProgress,
-  action
+  action: { type: string; }
 ) {
   if (action.type == types.BEGIN_API_CALL) {
     return state + 1;

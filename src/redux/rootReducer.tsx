@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import markers from "./markers/markersReducer.tsx";
-import polygons from "./polygons/polygonsReducer.tsx";
-import polylines from "./polylines/polylinesReducer.tsx";
-import apiCallsInProgress from "./apiStatusReducer.tsx";
+import markers from "./markers/markersReducer";
+import polygons from "./polygons/polygonsReducer";
+import polylines from "./polylines/polylinesReducer";
+import apiCallsInProgress from "./apiStatusReducer";
 
 const rootReducer = combineReducers({
   markers,

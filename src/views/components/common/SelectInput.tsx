@@ -31,9 +31,9 @@ const SelectInput = ({
           className="form-control"
         >
           <option value="">{defaultOption}</option>
-          {options.map(option => {
+          {options.map((option: { value: string | number | string[] | undefined; text: React.ReactNode; }) => {
             return (
-              <option key={option.value} value={option.value}>
+              <option value={option.value}>
                 {option.text}
               </option>
             );

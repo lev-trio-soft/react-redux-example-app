@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { loadCourses, saveCourse } from "../../redux/actions/courseActions.tsx";
-import { loadAuthors } from "../../redux/actions/authorActions.tsx";
+import { loadCourses, saveCourse } from "../../redux/actions/courseActions";
+import { loadAuthors } from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import CourseForm from "./CourseForm";
 import { newCourse } from "../../../../tools/mockData";
-import Spinner from "../common/Spinner.tsx";
+import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 
 export function ManageCoursePage({

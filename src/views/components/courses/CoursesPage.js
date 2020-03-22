@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as courseActions from "../../redux/actions/courseActions.tsx";
-import * as authorActions from "../../redux/actions/authorActions.tsx";
+import * as courseActions from "../../redux/actions/courseActions";
+import * as authorActions from "../../redux/actions/authorActions";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import CourseList from "./CourseList";
 import { Redirect } from "react-router-dom";
-import Spinner from "../common/Spinner.tsx";
+import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
 
 class CoursesPage extends React.Component {

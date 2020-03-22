@@ -1,16 +1,15 @@
-import { Map as MyLeafletMap } from "./Map.tsx";
+import { Map as MyLeafletMap } from "./Map";
 import React, { useEffect, useState } from "react";
-import { loadMarkers } from "../../../redux/markers/markersActions.tsx"
-import { loadPolylines } from "../../../redux/polylines/polylinesActions.tsx";
-import { loadPolygons } from "../../../redux/polygons/polygonsActions.tsx";
-
-import Spinner from "../common/Spinner.tsx";
-import { IAppState } from "models/IAppState";
+import { loadMarkers } from "../../../redux/markers/markersActions"
+import { loadPolylines } from "../../../redux/polylines/polylinesActions";
+import { loadPolygons } from "../../../redux/polygons/polygonsActions";
+import Spinner from "../common/Spinner";
+import { IAppState } from "../../../models/IAppState";
 import { connect } from "react-redux";
-import { Map as ReactLeafletMap, TileLayer, Marker, Popup } from "react-leaflet"
-import { IMarker } from "redux/markers/models/IMarker";
-import { IPolygon } from "redux/polygons/models/IPolygon";
-import { IPolyline } from "redux/polylines/models/IPolyline";
+import { Map as ReactLeafletMap, TileLayer, Marker } from "react-leaflet"
+import { IMarker } from "../../../redux/markers/models/IMarker";
+import { IPolygon } from "../../../redux/polygons/models/IPolygon";
+import { IPolyline } from "../../../redux/polylines/models/IPolyline";
 
 interface IProps {
   loadPolylines: Function;
@@ -39,15 +38,15 @@ function MapPage({
 
   useEffect(() => {
     if (polygons.length + markers.length + polylines.length == 0) {
-      loadMarkers().catch(error => {
+      loadMarkers().catch((error: string) => {
         alert("Loading markers failed" + error);
       });
 
-      loadPolylines().catch(error => {
+      loadPolylines().catch((error: string) => {
         alert("Loading polylines failed" + error);
       });
 
-      loadPolygons().catch(error => {
+      loadPolygons().catch((error: string) => {
         alert("Loading polygons failed" + error);
       });
     }
@@ -64,23 +63,13 @@ function MapPage({
       ) : (
           <>
             <br></br>
-            <button onClick={moveMarker}>Move Marker</button>
+            <button onClick={moveMarker}>RT EVENT 1</button>
+            <button onClick={moveMarker}>RT EVENT 2</button>
+            <button onClick={moveMarker}>RT EVENT 3</button>
+            <button onClick={moveMarker}>RT EVENT 4</button>
             <br></br>
             <MyLeafletMap markers={markers} polylines={polylines} polygons={polygons} />
             <br></br>
-
-            <ReactLeafletMap center={[31.813657, 34.65553]} zoom={10}>
-              <TileLayer
-                url="https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGV2LXRyaW8tc29mdCIsImEiOiJjazduYjFzM3EwMThlM2xudnFrb3V6ZG9pIn0.clEH5tM5XSJI-5WTBftAlQ"
-                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-              />
-              {
-                markers.map(element => {
-                  <Marker position={element.coordinates} />
-                })
-              }
-
-            </ReactLeafletMap>
           </>
         )}
     </div>

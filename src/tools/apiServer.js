@@ -11,13 +11,13 @@ Relevant source code: https://github.com/typicode/json-server/blob/master/src/cl
 */
 
 /* eslint-disable no-console */
-const jsonServer = require("json-server");
+const jsonServer = require("./node_modules/json-server");
 const server = jsonServer.create();
 const path = require("path");
 const router = jsonServer.router(path.join(__dirname, "db.json"));
 
 // Can pass a limited number of options to this to override (some) defaults. See https://github.com/typicode/json-server#api
-const middlewares = jsonServer.defaults(({ noCors: true }));
+const middlewares = jsonServer.defaults();
 
 // Set default middlewares (logger, static, cors and no-cache)
 server.use(middlewares);
@@ -27,7 +27,6 @@ server.use(jsonServer.bodyParser);
 
 // Simulate delay on all requests
 server.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
   setTimeout(next, 2000);
 });
 
@@ -35,7 +34,6 @@ server.use(function (req, res, next) {
 
 // Add createdAt to all POSTS
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
   if (req.method === "POST") {
     req.body.createdAt = Date.now();
   }
@@ -61,7 +59,6 @@ const port = 3001;
 server.listen(port, () => {
   console.log(`JSON Server is running on port ${port}`);
 });
-debugger;
 
 // Centralized logic
 

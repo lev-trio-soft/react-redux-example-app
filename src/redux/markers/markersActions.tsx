@@ -1,16 +1,16 @@
-import * as types from "./markersActionTypes.tsx";
-import * as markersApi from "../../domainServices/markersApi.tsx";
-import { beginApiCall, apiCallError } from "../apiStatusActions.tsx";
+import * as types from "./markersActionTypes";
+import * as markersApi from "../../domainServices/markersApi";
+import { beginApiCall, apiCallError } from "../apiStatusActions";
 import { IMarker } from "./models/IMarker";
-import IAction from "models/IAction";
-import * as ActionUtility from '../../utilities/ActionUtility.tsx';
+import IAction from "../../models/IAction";
+import * as ActionUtility from '../../utilities/ActionUtility';
 
-export function loadMarkersSuccess(markers) {
+export function loadMarkersSuccess(markers: any) {
   return ActionUtility.createAction(types.LOAD_MARKERS_SUCCESS, markers);
 }
 
 export function loadMarkers() {
-  return function (dispatch) {
+  return function (dispatch: (arg0: IAction<any>) => void) {
     dispatch(beginApiCall());
     return markersApi
       .getMarkers()
@@ -18,7 +18,7 @@ export function loadMarkers() {
         dispatch(loadMarkersSuccess(markers));
       })
       .catch(error => {
-        dispatch(apiCallError(error));
+        dispatch(apiCallError());
         throw error;
       });
   };
